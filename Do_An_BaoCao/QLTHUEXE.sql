@@ -1,0 +1,103 @@
+﻿create DATABASE QLTHUEXE
+use QLTHUEXE
+go
+CREATE TABLE NhanVien
+(
+	[MaNV] INT NOT NULL PRIMARY KEY, 
+    [HoTenNV] NVARCHAR(255) NOT NULL, 
+	[NgaySinh] date NOT NULL,
+    [GioiTinh] NVARCHAR(255) NOT NULL,
+	[MaPB] int NOT NULL,
+	[GhiChu] NVARCHAR(255) NOT NULL
+)
+create TABLE PhongBan
+(
+	[MaPB] int NOT NULL PRIMARY KEY, 
+    [TenPB] NVARCHAR(255) NOT NULL,
+	[GhiChu] NVARCHAR(255) NULL
+)
+create TABLE KhachHang
+(
+	[MaKH] INT NOT NULL PRIMARY KEY, 
+    [HoTenKH] NVARCHAR(255) NOT NULL, 
+	[NgaySinh] date NOT NULL,
+    [GioiTinh] NVARCHAR(255) NOT NULL,
+	[CMND] INT NOT NULL,
+	[SoTKNH] INT NOT NULL,
+	[SDT] INT NOT NULL,
+	[Email] NVARCHAR(255) NOT NULL,
+	[DiaChi] NVARCHAR(255) NOT NULL,
+	[GhiChu] NVARCHAR(255) NOT NULL
+)
+CREATE TABLE ThueXe
+(
+	[MaTX] INT NOT NULL PRIMARY KEY,
+	[MaKH] INT NOT NULL,  
+	[NgaySinh] date NOT NULL,
+	[GioiTinh] NVARCHAR(255) NOT NULL,
+	[CMND] INT NOT NULL,
+	[SoTKNH] INT NOT NULL,
+	[Email] NVARCHAR(255) NOT NULL,
+	[DiaChi] NVARCHAR(255) NOT NULL,
+	[MaXe] INT NOT NULL,
+	[TenXe] nvarchar(255) NOT NULL,
+	[ChatLuong] NVARCHAR(255) NOT NULL,
+	[NgayThue] date not null,
+	[NgayTra] date not null,
+	[GiaThue] int not null,
+)
+
+create TABLE XeDap
+(
+	[MaXe] INT NOT NULL PRIMARY KEY,
+	[MaNSX] INT NOT NULL,
+	[TenXe] nvarchar(255) NOT NULL,
+	[LoaiXe] NVARCHAR(255) NOT NULL,
+	[ChatLuong] NVARCHAR(255) NOT NULL,
+	[GiaThue] int not null
+)
+create table HoaDon
+(
+	[MaHD] INT NOT NULL PRIMARY KEY,
+	[MaKH] INT NOT NULL,
+	[TenKH] nvarchar(255) NOT NULL,
+	[MaXe] int not null,
+	[TenXe] nvarchar(255) NOT NULL,
+	[LoaiXe] NVARCHAR(255) NOT NULL,
+	[ChatLuong] NVARCHAR(255) NOT NULL,
+	[NgayThue] date not null,
+	[NgayTra] date not null,
+	[GiaThue] int not null,
+)
+create table BaoDuong
+(   
+	[MaBD] INT NOT NULL PRIMARY KEY,
+	[MaNV] INT NOT NULL ,
+	[MaXe] INT NOT NULL,
+	[MaPB] INT NOT NULL,
+	[TenXe] nvarchar(255) NOT NULL,
+	[LoaiXe] NVARCHAR(255) NOT NULL,
+	[ChatLuong] NVARCHAR(255) NOT NULL,
+	[NgayBD] date not null,
+)
+CREATE TABLE ThanhVien
+(
+	[MaTV] INT IDENTITY(1,1) PRIMARY KEY,
+	[TenDangNhap] NVARCHAR(200),
+	[MatKhau] NVARCHAR(200) NOT NULL,
+	[HoTen] NVARCHAR(200) NOT NULL,
+	[Email] NVARCHAR(200) NOT NULL,
+	[DienThoai] NVARCHAR(220) NOT NULL,
+	[Quyen] NVARCHAR(20) NOT NULL
+)
+
+ALTER TABLE NhanVien ADD CONSTRAINT FK_PhongBan_MAPB FOREIGN KEY (MaPB) REFERENCES PhongBan(MaPB) 
+ALTER TABLE HoaDon ADD CONSTRAINT FK_HoaDon_MaKH FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH) 
+ALTER TABLE BaoDuong ADD CONSTRAINT FK_BaoDuong_MaXe FOREIGN KEY (MaXe) REFERENCES XeDap(MaXe)
+ALTER TABLE HoaDon ADD CONSTRAINT FK_HoaDon_MaXe FOREIGN KEY (MaXe) REFERENCES XeDap(MaXe)
+ALTER TABLE BaoDuong ADD CONSTRAINT FK_BaoDuong_MAPB FOREIGN KEY (MaPB) REFERENCES PhongBan(MaPB) 
+ALTER TABLE ThueXe ADD CONSTRAINT FK_ThueXe_MaXe FOREIGN KEY (MaXe) REFERENCES XeDap(MaXe) 
+ALTER TABLE ThueXe ADD CONSTRAINT FK_ThueXe_MaKH FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH) 
+
+--nhập dữ liệu
+INSERT INTO ThanhVien VALUES('Nhan1998','QQBkAG0AaQBuAA==',N'Lê Ngọc Nhân','lnnhan1998@gmail.com','0972132312','admin')
